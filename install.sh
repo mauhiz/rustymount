@@ -33,8 +33,10 @@ esac
 # Pick download tool
 if command -v curl >/dev/null 2>&1; then
   fetch() { curl -fsSL "$1"; }
+  resolve_tag() { curl -fsSL -o /dev/null -w '%{url_effective}' "$1" | sed 's|.*/||'; }
 elif command -v wget >/dev/null 2>&1; then
   fetch() { wget -qO- "$1"; }
+  resolve_tag() { wget -qO /dev/null --server-response "$1" 2>&1 | grep -i 'Location:' | tail -1 | sed 's|.*/||' | tr -d '\r'; }
 else
   echo "curl or wget is required" >&2
   exit 1
@@ -42,9 +44,7 @@ fi
 
 # Resolve latest tag unless TAG is already set
 if [ -z "$TAG" ]; then
-  TAG="$(fetch "https://api.github.com/repos/$REPO/releases/latest" \
-    | grep '"tag_name"' \
-    | sed 's/.*"tag_name": *"\([^"]*\)".*/\1/')"
+  TAG="$(resolve_tag "https://github.com/${REPO}/releases/latest")"
 fi
 
 if [ -z "$TAG" ]; then

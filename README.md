@@ -5,7 +5,7 @@ Mount ZIP/JAR archives as read-only FUSE filesystems (macOS and Linux).
 ## Install
 
 ```sh
-curl -fsSL https://github.com/mauhiz/rustymount/releases/latest/download/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/mauhiz/rustymount/main/install.sh | sh
 ```
 
 Or with a specific version / install directory:
