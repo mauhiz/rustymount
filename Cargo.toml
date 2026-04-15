@@ -1,0 +1,15 @@
+[package]
+name = "rustymount"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "rustymount"
+
+[dependencies]
+anyhow = "1"
+clap = { version = "4", features = ["derive"] }
+fuser = "0.14"
+libc = "0.2"
+time = "0.3"
+zip = "2"
